@@ -28,6 +28,7 @@ public class Drawer
        UI.addButton("Random Colour", this::randomColour); // another button
        UI.addButton("Colour", this::doChooseColor);
        UI.addButton("Cricle or Square", this::dochangeshape);
+       UI.addButton("line to rectangle", this::dochangeline);
        UI.addTextField("write somthing", this::doText);
        UI.addButton("Quit", UI::quit);
        UI.setMouseListener(this::doMouse);
@@ -82,6 +83,19 @@ public class Drawer
         }
    
     }
+    
+    /**
+     * call back and changes shape between square and cricle 
+     */
+    public void dochangeline(){
+        if(line == true){
+            line = false;
+        }
+        else if(line == false){
+            line = true; 
+        }
+   
+    }
 
     /**
      * Call back method for mouse 
@@ -93,10 +107,12 @@ public class Drawer
             this.startX = x;
             this.startY = y;
             UI.drawLine(this.startX, this.startY, x, y);
-        } else if(action.equals("released")){
+        } else if(action.equals("released")&&(line == true)){
+            UI.drawLine(this.startX, this.startY, x, y);//draw line 
+        }else if(action.equals("released")&&(line == false)){
             this.finalX = x;
             this.finalY = y; 
-            UI.fillRect(this.startX, this.startY,this.finalX-this.startX, this.finalY-this.startY); //coordiantes for the reactangle 
+            UI.fillRect(this.startX, this.startY,this.finalX-this.startX, this.finalY-this.startY);// create a rectangle
         }else if(action.equals("clicked")&&(cricle == true)){
             UI.fillOval(x-50/2, y-50/2, 50, 50); //draw a cricle on click without the little square 
         }else if(action.equals("clicked")&&(cricle == false)){
